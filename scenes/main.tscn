@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://clxfwpmwefvio"]
+
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_ljvmw"]
+[ext_resource type="Script" path="res://scripts/Level.cs" id="2_1mhdp"]
+[ext_resource type="PackedScene" uid="uid://r5oqheb27rct" path="res://scenes/player.tscn" id="2_14rhk"]
+[ext_resource type="PackedScene" uid="uid://dt4e85h4iqvwa" path="res://scenes/pipe_obstacle.tscn" id="3_uswxk"]
+[ext_resource type="PackedScene" uid="uid://b4hob73dnbsp1" path="res://scenes/powerup.tscn" id="5_4hmuq"]
+[ext_resource type="PackedScene" uid="uid://cnd8vxtqj72kj" path="res://scenes/hud.tscn" id="5_f58qs"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ljvmw")
+
+[node name="Player" parent="." instance=ExtResource("2_14rhk")]
+z_index = 2
+position = Vector2(70, 160)
+gravity_scale = 0.0
+max_contacts_reported = 2
+fallingGravityScale = 0.35
+startPos = Vector2(70, 160)
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.788235, 1, 1)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.5
+
+[node name="Level" type="Node" parent="." node_paths=PackedStringArray("spawnTimer")]
+script = ExtResource("2_1mhdp")
+spawnTimer = NodePath("../SpawnTimer")
+pipeObstacle = ExtResource("3_uswxk")
+powerup = ExtResource("5_4hmuq")
+scrollSpeed = 200.0
+
+[node name="HUD" parent="." instance=ExtResource("5_f58qs")]
+
+[connection signal="CollidePipe" from="Player" to="." method="GameOver"]
+[connection signal="GainPoint" from="Player" to="." method="AddPoint"]
+[connection signal="timeout" from="SpawnTimer" to="Level" method="OnSpawnTimerTimeout"]
+[connection signal="StartGame" from="HUD" to="." method="NewGame"]
+
+[editable path="Player"]

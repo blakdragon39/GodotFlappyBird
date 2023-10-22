@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt4e85h4iqvwa"]
+
+[ext_resource type="PackedScene" uid="uid://b32bqlvn5arim" path="res://scenes/obstacles/pipe_top.tscn" id="2_2isxx"]
+[ext_resource type="PackedScene" uid="uid://ynp82gnufbc0" path="res://scenes/obstacles/pipe_top_mirror.tscn" id="2_b2d40"]
+[ext_resource type="PackedScene" uid="uid://cgh5it0urg2nl" path="res://scenes/obstacles/pipe_middle.tscn" id="3_hqu23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwxnj"]
+size = Vector2(20, 26.4789)
+
+[node name="PipeObstacle" type="Node2D"]
+
+[node name="TopPipe" type="Node2D" parent="."]
+position = Vector2(0, -60)
+
+[node name="Opening" parent="TopPipe" instance=ExtResource("2_b2d40")]
+z_index = 1
+
+[node name="Pipe" parent="TopPipe" instance=ExtResource("3_hqu23")]
+position = Vector2(0, -82)
+
+[node name="Pipe2" parent="TopPipe" instance=ExtResource("3_hqu23")]
+position = Vector2(0, -223)
+
+[node name="Pipe3" parent="TopPipe" instance=ExtResource("3_hqu23")]
+position = Vector2(0, -364)
+
+[node name="BottomPipe2" type="Node2D" parent="."]
+position = Vector2(0, 60)
+
+[node name="Opening" parent="BottomPipe2" instance=ExtResource("2_2isxx")]
+z_index = 1
+
+[node name="Pipe" parent="BottomPipe2" instance=ExtResource("3_hqu23")]
+position = Vector2(0, 82)
+
+[node name="Pipe2" parent="BottomPipe2" instance=ExtResource("3_hqu23")]
+position = Vector2(0, 223)
+
+[node name="Pipe3" parent="BottomPipe2" instance=ExtResource("3_hqu23")]
+position = Vector2(0, 364)
+
+[node name="Point" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Point"]
+position = Vector2(25.5, 1.90735e-06)
+scale = Vector2(1.75, 3.55)
+shape = SubResource("RectangleShape2D_wwxnj")

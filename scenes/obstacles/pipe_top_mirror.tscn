@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://ynp82gnufbc0"]
+
+[ext_resource type="Texture2D" uid="uid://do4gkja4308vf" path="res://art/misc-2.png" id="1_11rqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5n0r"]
+
+[node name="PipeTop" type="Area2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_11rqr")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(309, 417, 32, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.38419e-07, -0.500001)
+scale = Vector2(2.4, 1.25)
+shape = SubResource("RectangleShape2D_q5n0r")

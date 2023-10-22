@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://r5oqheb27rct"]
+
+[ext_resource type="Texture2D" uid="uid://bpy7rw28b3sf2" path="res://art/flappy1.png" id="1_0rh3r"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_06kx7"]
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="2_d214o"]
+[ext_resource type="Texture2D" uid="uid://dt0ywytkiolsn" path="res://art/flappy2.png" id="2_mrisi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b3u2u"]
+shader = ExtResource("2_d214o")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5wnkf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0rh3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_mrisi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ebcf"]
+radius = 12.6087
+
+[node name="Player" type="RigidBody2D"]
+collision_mask = 0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_06kx7")
+rainbowMaterial = SubResource("ShaderMaterial_b3u2u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_5wnkf")
+flip_h = true
+
+[node name="Collision" type="Area2D" parent="."]
+position = Vector2(1.5, -1.2517e-06)
+scale = Vector2(1.15, 1.1)
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+shape = SubResource("CircleShape2D_7ebcf")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="area_entered" from="Collision" to="." method="OnAreaEntered"]
